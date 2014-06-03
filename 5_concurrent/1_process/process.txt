@@ -1,0 +1,27 @@
+- one of the main reasons for using Erlang instead of other functional languages is Erlang's ability to handle concurrency and distributed programming.
+
+- by concurrency we mean programs which can handle several threads of execution at the same time.
+
+- syntax
+  spawn(Module, Exported_Function, List of Arguments)
+
+- example
+  -module(process)
+  -export([start/0, say_something/2])
+
+  say_something(What, 0) -> done;
+  say_something(What, Times) ->
+    io:format("~p~n", [What])
+    say_something(What, Times - 1).
+  start() ->
+    spawn(process, say_somthing, [hello, 3]),
+    spawn(process, say_somthing, [goodbye, 3]),
+
+  > process:start().
+  hello
+  goodbye
+  <0.63.0>
+  hello
+  goodbye
+  hello
+  goodbye
